@@ -2,8 +2,8 @@ import re
 
 pattern = re.compile('^(\d\d)/(\d\d)/(\d\d\d\d), (\d\d):(\d\d) - ([\w ]*):(.*)$')
 words = lambda string: map(
-    lambda word: word.lower(),
-    filter(lambda char: char.isalpha() or char.isspace(), string.strip()).split()
+	lambda word: word.lower(),
+	filter(lambda char: char.isalpha() or char.isspace(), string.strip()).split()
 )
 similarity = lambda char1, char2: 1 if char1.lower() == char2.lower() else -1
 
@@ -45,3 +45,10 @@ def find(database, query):
 		if maximum < match: maximum, matches = match, [i]
 		elif maximum == match: matches.append(i)
 	return maximum, matches
+
+def next(database, query, cursor):
+	score, proposals = find(database, query)
+	best = -1
+	for proposal in proposals:
+		if proposal >= cursor: break
+	return proposal + 1
