@@ -50,5 +50,6 @@ def next(database, query, cursor):
 	score, proposals = find(database, query)
 	best = -1
 	for proposal in proposals:
+		best = proposal
 		if proposal >= cursor: break
-	return proposal + 1
+	return best + 1 if best + 1 < len(database['texts']) else 0
